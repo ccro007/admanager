@@ -1,6 +1,6 @@
 <?php
 /**
- * Channel form
+ * Adinfo form
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -24,12 +24,12 @@ use Pi;
 use Pi\Form\Form as BaseForm;
 use Module\Admanager\Model\Protal;
 
-class ChannelForm extends BaseForm
+class AdinfoForm extends BaseForm
 {
     public function getInputFilter()
     {
         if (!$this->filter) {
-            $this->filter = new ChannelFilter;
+            $this->filter = new AdinfoFilter;
         }
         return $this->filter;
     }
@@ -39,7 +39,7 @@ class ChannelForm extends BaseForm
         $this->add(array(
             'name'          => 'name',
             'options'       => array(
-                'label' => __('Channel name'),
+                'label' => __('Adinfo name'),
             ),
             'attributes'    => array(
                 'type'  => 'text',

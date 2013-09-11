@@ -28,7 +28,7 @@ return array(
         // Description, for admin, optional
         'description'   => 'Ad system for EEfocus.',
         // Version number, required
-        'version'       => '1.0.2-beta.1',
+        'version'       => '1.0.3-beta.1',
         // Distribution license, required
         'license'       => 'New BSD',
         // Logo image, for admin, optional
@@ -75,9 +75,9 @@ return array(
                 // Tables to be removed during uninstall, optional - the table list will be generated automatically upon installation
                 'schema'    => array(
                     'protal'            => 'table',
-                    //'supplier'          => 'table',
-                    //'channel'           => 'table',
-                    //'adverinfo'         => 'table',
+                    'supplier'          => 'table',
+                    'channel'           => 'table',
+                    'adinfo'         => 'table',
                 )
             ),
             // ACL specs

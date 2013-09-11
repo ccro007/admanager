@@ -98,6 +98,7 @@ EOD;
         */
 
         /* Add table of adinfo, used in version  1.0.3-beta.1 */
+        /*
         $sql = <<<'EOD'
 CREATE TABLE `{adinfo}` (
   `id`              int(10) UNSIGNED                NOT NULL AUTO_INCREMENT,
@@ -107,6 +108,7 @@ CREATE TABLE `{adinfo}` (
   `url`             varchar(255)                    NOT NULL DEFAULT '',
   `supplier_id`     int(10) UNSIGNED                NOT NULL DEFAULT 0,
   `content`         text,
+  `ad_date`         int(10) UNSIGNED                NOT NULL DEFAULT 0,
   `time_create`     int(10) UNSIGNED                NOT NULL DEFAULT 0,
   `time_update`     int(10) UNSIGNED                NOT NULL DEFAULT 0,
   `user_update`     int(10) UNSIGNED                NOT NULL DEFAULT 0,
@@ -127,6 +129,7 @@ EOD;
             $e->setParam('result', $result);
             return false;
         }
+        */
 
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Channel controller
+ * Adinfo controller
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -22,9 +22,9 @@ namespace Module\Admanager\Controller\Admin;
 
 use Pi;
 use Pi\Mvc\Controller\ActionController;
-use Module\Admanager\Form\ChannelForm;
-use Module\Admanager\Form\ChannelFilter;
-use Module\Admanager\Model\Channel;
+use Module\Admanager\Form\AdinfoForm;
+use Module\Admanager\Form\AdinfoFilter;
+use Module\Admanager\Model\Adinfo;
 use Module\Admanager\Service;
 use Pi\Paginator\Paginator;
 
@@ -34,7 +34,7 @@ use Pi\Paginator\Paginator;
  *  2. Add/Edit a channel
  *  3. Delete a channel
  */
-class ChannelController extends ActionController
+class AdinfoController extends ActionController
 {
     protected $channelColumns = array(
         'id', 'name', 'protal_id', 'time_create', 'time_update', 'user_update',
@@ -42,7 +42,7 @@ class ChannelController extends ActionController
 
     protected  $displayColumns = array(
                             array('column'=>'protal_id', 'name'=> 'Protal', 'width'=>'15'),
-                            array('column'=>'name', 'name'=> 'Channel name', 'width'=>'45'),
+                            array('column'=>'name', 'name'=> 'Adinfo name', 'width'=>'45'),
                             array('column'=>'time_create', 'name'=> 'Added Date', 'width'=>'15'),
                             array('column'=>'time_update', 'name'=> 'Last Modified','width'=>'15'),
     );
@@ -66,8 +66,8 @@ class ChannelController extends ActionController
         if (!empty($schName)) {
             $where['name like ?'] = sprintf('%%%s%%',$schName);
         }
-        $modelChannel = $this->getModel('channel');
-        $channels = $modelChannel->getSearchRows($where, $limit, $offset, $this->channelColumns, sprintf('%s %s', $orderby, $order));
+        $modelAdinfo = $this->getModel('channel');
+        $channels = $modelAdinfo->getSearchRows($where, $limit, $offset, $this->channelColumns, sprintf('%s %s', $orderby, $order));
 
         /* get protals info */
         $protal_ids = array();
@@ -80,7 +80,7 @@ class ChannelController extends ActionController
         $protals = $modelProtal->getRows($protal_ids, array('id','name'));
 
         /* Total count */
-        $totalCount = $modelChannel->getSearchRowsCount($where);
+        $totalCount = $modelAdinfo->getSearchRowsCount($where);
         /* gen paginator */
         $paginator = Paginator::factory($totalCount);
         $urlOptions = array(
@@ -149,8 +149,8 @@ class ChannelController extends ActionController
         $module = $this->getModule();
         if ($this->request->isPost()) {
             $data = $this->request->getPost();
-            $form = new ChannelForm('channel');
-            $form->setInputFilter(new ChannelFilter);
+            $form = new AdinfoForm('channel');
+            $form->setInputFilter(new AdinfoFilter);
             $form->setData($data);
             if ($form->isValid()) {
                 $values = $form->getData();
@@ -164,18 +164,18 @@ class ChannelController extends ActionController
                 $row = $this->getModel('channel')->createRow($values);
                 $row->save();
                 if ($row->id) {
-                    $message = __('Channel data saved successfully.');
+                    $message = __('Adinfo data saved successfully.');
                     //$this->view()->setTemplate(false);
                     $this->redirect()->toRoute('', array('action' => 'index'));
                     return;
                 } else {
-                    $message = __('Channel data not saved.');
+                    $message = __('Adinfo data not saved.');
                 }
             } else {
                 $message = __('Invalid data, please check and re-submit.');
             }
         } else {
-            $form = new ChannelForm('channel');
+            $form = new AdinfoForm('channel');
             $form->setAttribute('action', $this->url('', array('action' => 'add')));
             $form->setData(array(
                 'module'    => $module,
@@ -200,8 +200,8 @@ class ChannelController extends ActionController
             $data = $this->request->getPost();
             $id = $data['id'];
             $row = $this->getModel('channel')->find($id);
-            $form = new ChannelForm('channel');
-            $form->setInputFilter(new ChannelFilter);
+            $form = new AdinfoForm('channel');
+            $form->setInputFilter(new AdinfoFilter);
             $form->setData($data);
             if ($form->isValid()) {
                 $values = $form->getData();
@@ -213,7 +213,7 @@ class ChannelController extends ActionController
                 $values['time_update'] = time();
                 $row->assign($values);
                 $row->save();
-                //$message = __('Channel data saved successfully.');
+                //$message = __('Adinfo data saved successfully.');
                 $this->redirect()->toRoute('', array('action' => 'index'));
                 return;
             } else {
@@ -228,7 +228,7 @@ class ChannelController extends ActionController
                         'time_create'=>date($dateFormat, $data['time_create']),
                         'time_update'=>date($dateFormat, $data['time_update'])
                         );
-            $form = new ChannelForm('channel');
+            $form = new AdinfoForm('channel');
             $form->setData($data);
             $form->setAttribute('action', $this->url('', array('action' => 'edit')));
             $message = '';
@@ -237,7 +237,7 @@ class ChannelController extends ActionController
             $this->view()->assign('extdata', $extdata);
         }
         $this->view()->assign('form', $form);
-        $this->view()->assign('title', __('Channel edit'));
+        $this->view()->assign('title', __('Adinfo edit'));
         $this->view()->assign('message', $message);
         $this->view()->setTemplate('channel-edit');
     }
