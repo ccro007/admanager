@@ -1,0 +1,82 @@
+<!--
+<ul class="nav nav-tabs">
+    <li class="active"><a href="<?php echo $this->url('', array('action' => 'index')); ?>" title="<?php _e('Channel list'); ?>"><?php _e('Channel list'); ?></a>
+    <li><a href="<?php echo $this->url('', array('action' => 'add')); ?>" title="<?php _e('Add Channel'); ?>"><?php _e('Add Channel'); ?></a>
+</ul>
+-->
+
+<div class="clearfix form-inline">
+    <a class="btn" href="<?php echo $this->url('',array('action' => 'add')); ?>"><?php _e('Add'); ?></a>
+    <a class="btn btn-delete" href="javascript:void(0);" onclick="channelList.submit();"><?php _e('Delete'); ?></a>
+    <form class="pull-right form-search" method="get" action="<?php echo $this->url('',array('action' => 'index','orderby'=>$orderby,'order'=>$order)); ?>">
+        <input type="text" value="<?php echo $schName;?>" placeholder="<?php _e('Channel Name'); ?>" class="input-medium search-query" name="schName">
+        <!--input type="text" value="<?php echo $schUrl;?>" placeholder="<?php _e('Channel Url'); ?>" class="input-medium search-query" name="schUrl"-->
+        <input type="submit" value="<?php _e('Search'); ?>" name="submit" class="btn">
+    </form>
+</div>
+
+<form method="post" id="channelList" action="<?php echo $this->url('',array('action' => 'delete')); ?>">
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+    <tr>
+        <th style="width:2.2em;">
+            <input type="checkbox" class="check-all">
+        </th>
+        <?php echo $tableHeader;?>
+        <th><a href="javascript:void(0);"><?php _e('Operation');?></a></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($channels as $channel) : ?>
+    <tr data-id="<?php echo $channel['id']; ?>">
+        <td>
+            <input type="checkbox" value="<?php echo $channel['id'];?>" class="check-one" name="id[]">
+        </td>
+        <td><?php echo $protals[$channel['protal_id']]['name']; ?></td>
+        <td><?php echo $channel['name']; ?></td>
+        <td><?php echo $channel['time_create']; ?></td>
+        <td><?php echo $channel['time_update']; ?></td>
+        <td>
+            <span><a  href="<?php echo $this->url('', array('action' => 'edit', 'id' => $channel['id'])); ?>" title="<?php _e('Edit'); ?>"><?php _e('Edit'); ?></a></span>
+            <span><a  href="<?php echo $this->url('', array('action' => 'delete', 'id' => $channel['id'])); ?>" title="<?php _e('Delete'); ?>"><?php _e('Delete'); ?></a></span>
+        </td>
+    </tr>
+    <?php endforeach;?>
+    </tbody>
+</table>
+</form>
+<?php echo $this->paginationControl($paginator, 'Sliding', 'paginator.phtml',array('class' => 'pagination-right')); ?>
+<script>
+(function($){
+   var page={
+       g:function(selector){
+           return jQuery("#channelList").find(selector);
+       },
+       init:function(){
+           this.g(".check-all").click(this.checkAll);
+           this.g(".check-one").click(this.clickOne);
+       },
+       checkAll:function(){
+           var flag = page.g(".check-all").prop("checked");
+           page.g(".check-one").prop("checked",flag).each(function(){
+               var tr=$(this).parents("tr:first");
+                if(flag){
+                    tr.addClass("info");
+                }else{
+                    tr.removeClass("info");
+                }
+           });
+       },
+       clickOne:function(e){
+           var el=$(e.target),
+               tr=el.parents("tr:first");
+           if(el.prop("checked")){
+               tr.addClass("info");
+           }else{
+               tr.removeClass("info");
+           }
+       }
+   }
+   page.init();
+})(jQuery)
+</script>
