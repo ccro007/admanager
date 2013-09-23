@@ -27,19 +27,27 @@
     </tr>
     </thead>
 
-    <?php var_dump($channels);
-    ?>
-
     <tbody>
-    <?php foreach ($channels as $channel) : ?>
+    <?php foreach ($Adinfos as $Adinfo) : ?>
     <tr data-id="<?php echo $channel['id']; ?>">
         <td>
             <input type="checkbox" value="<?php echo $channel['id'];?>" class="check-one" name="id[]">
         </td>
-        <td><?php echo $protals[$channel['protal_id']]['name']; ?></td>
-        <td><?php echo $channel['name']; ?></td>
-        <td><?php echo $channel['time_create']; ?></td>
-        <td><?php echo $channel['time_update']; ?></td>
+        
+        <!-- 输出数据表中的内容 -->
+        <td><?php echo $Adinfo['id'];           ?></td>
+        <td><?php echo $Adinfo['protal_id'];    ?></td>
+        <td><?php echo $Adinfo['channel_id'];   ?></td>
+        <td><?php echo $Adinfo['adformat'];     ?></td>
+        <td><?php echo $Adinfo['url'];          ?></td>
+        <td><?php echo $Adinfo['supplier_id'];  ?></td>
+        <td><?php echo $Adinfo['content'];      ?></td>
+        <td><?php echo $Adinfo['ad_date'];      ?></td>
+        <td><?php echo $Adinfo['time_create'];  ?></td>
+        <td><?php echo $Adinfo['time_update'];  ?></td>
+        <td><?php echo $Adinfo['user_update'];  ?></td>
+
+
         <td>
             <span><a  href="<?php echo $this->url('', array('action' => 'edit', 'id' => $channel['id'])); ?>" title="<?php _e('Edit'); ?>"><?php _e('Edit'); ?></a></span>
             <span><a  href="<?php echo $this->url('', array('action' => 'delete', 'id' => $channel['id'])); ?>" title="<?php _e('Delete'); ?>"><?php _e('Delete'); ?></a></span>
