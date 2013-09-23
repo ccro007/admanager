@@ -71,11 +71,11 @@ class ChannelController extends ActionController
 
         /* get protals info */
         $protal_ids = array();
-        foreach($channels as $channel) {
-            if (!in_array($channel['protal_id'], $protal_ids)) {
-                array_push(&$protal_ids, $channel['protal_id']);
-            }
-        }
+        // foreach($channels as $channel) {
+        //     if (!in_array($channel['protal_id'], $protal_ids)) {
+        //         array_push(&$protal_ids, $channel['protal_id']);
+        //     }
+        // }
         $modelProtal = $this->getModel('protal');
         $protals = $modelProtal->getRows($protal_ids, array('id','name'));
 

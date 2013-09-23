@@ -37,7 +37,10 @@ use Pi\Paginator\Paginator;
 class AdinfoController extends ActionController
 {
     protected $channelColumns = array(
-        'id', 'name', 'protal_id', 'time_create', 'time_update', 'user_update',
+        'id', 'protal_id', 'channel_id',
+        'adformat','url','supplier_id','content',
+        'ad_date','time_create','time_update',
+        'user_update',
     );
 
     protected  $displayColumns = array(
@@ -66,16 +69,16 @@ class AdinfoController extends ActionController
         if (!empty($schName)) {
             $where['name like ?'] = sprintf('%%%s%%',$schName);
         }
-        $modelAdinfo = $this->getModel('channel');
+        $modelAdinfo = $this->getModel('Adinfo');
         $channels = $modelAdinfo->getSearchRows($where, $limit, $offset, $this->channelColumns, sprintf('%s %s', $orderby, $order));
 
         /* get protals info */
-        $protal_ids = array();
-        foreach($channels as $channel) {
-            if (!in_array($channel['protal_id'], $protal_ids)) {
-                array_push(&$protal_ids, $channel['protal_id']);
-            }
-        }
+        // $protal_ids = array();
+        // foreach($channels as $channel) {
+        //     if (!in_array($channel['protal_id'], $protal_ids)) {
+        //         array_push(&$protal_ids, $channel['protal_id']);
+        //     }
+        // }
         $modelProtal = $this->getModel('protal');
         $protals = $modelProtal->getRows($protal_ids, array('id','name'));
 
@@ -138,7 +141,7 @@ class AdinfoController extends ActionController
             'schUrl'        => $schUrl,
         );
         $this->view()->assign($assign);
-        $this->view()->setTemplate('channel-list');
+        $this->view()->setTemplate('Adinfo-list');
     }
 
     /**
