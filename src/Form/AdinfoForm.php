@@ -18,18 +18,18 @@
  * @version         $Id$
  */
 
+
 namespace Module\Admanager\Form;
 
 use Pi;
 use Pi\Form\Form as BaseForm;
-use Module\Admanager\Model\Protal;
 
 class AdinfoForm extends BaseForm
 {
     public function getInputFilter()
     {
         if (!$this->filter) {
-            $this->filter = new AdinfoFilter;
+            $this->filter = new ProtalFilter;
         }
         return $this->filter;
     }
@@ -37,32 +37,34 @@ class AdinfoForm extends BaseForm
     public function init()
     {
         $this->add(array(
-            'name'          => 'name',
+            'name'          => 'adformat',
             'options'       => array(
-                'label' => __('Adinfo name'),
+                'label' => __('adformat'),
             ),
             'attributes'    => array(
                 'type'  => 'text',
             )
         ));
 
-        $protalOptions = array();
-        $model = Pi::model('protal', 'admanager');
-        $protals = $model->getSearchRows(array(), null, null, array('name'));
-        foreach($protals as $protal_id=>$protal) {
-            $protalOptions[$protal_id] = $protal['name'];
-        }
-
         $this->add(array(
-            'name'          => 'protal_id',
+            'name'          => 'url',
             'options'       => array(
-                'label' => __('Protal'),
+                'label' => __('Protal url'),
             ),
             'attributes'    => array(
-                'type'    => 'select',
-                'options' => $protalOptions,
+                'type'  => 'text',
+                'class' => 'input-xxlarge',
             )
+        ));
 
+        $this->add(array(
+            'name'          => 'content',
+            'options'       => array(
+                'label' => __('content'),
+            ),
+            'attributes'    => array(
+                'type'  => 'text',
+            )
         ));
 
         $this->add(array(
@@ -82,3 +84,4 @@ class AdinfoForm extends BaseForm
         ));
     }
 }
+

@@ -43,15 +43,21 @@ class AdinfoController extends ActionController
         'user_update',
     );
 
+    protected $AdinfoColumns = array(
+        'id', 'protal_id', 'channel_id','adformat',
+        'url','supplier_id','content','ad_date',
+        'time_create', 'time_update', 'user_update',
+    );
+
     protected  $displayColumns = array(
-                            array('column'=>'supplier_id','name'=>'supplier_id', 'width'=>'5'),
-                            array('column'=>'protal_id',  'name'=> 'protal_id',  'width'=>'5'),
-                            array('column'=>'channel_id', 'name'=> 'channel_id', 'width'=>'5'),
-                            array('column'=>'adformat',   'name'=> 'adformat',   'width'=>'15'),
-                            array('column'=>'url',        'name'=>'url',         'width'=>'15'),                          
-                            array('column'=>'content',    'name'=>'content',     'width'=>'15'),
-                            array('column'=>'time_create','name'=>'time_create', 'width'=>'15'),
-                            array('column'=>'time_update','name'=>'time_update', 'width'=>'15'),
+                            array('column'=>'supplier_id', 'name'=>'supplier_id',   'width'=>'8' ),
+                            array('column'=>'protal_id',   'name'=> 'protal_id',    'width'=>'8' ),
+                            array('column'=>'channel_id',  'name'=> 'channel_id',   'width'=>'8' ),
+                            array('column'=>'adformat',    'name'=> 'adformat',     'width'=>'8' ), 
+                            array('column'=>'url',         'name'=> 'url',          'width'=>'15'),
+                            array('column'=>'content',     'name'=>'content',       'width'=>'8' ),
+                            array('column'=>'time_create', 'name'=>'Added Date',    'width'=>'20'),
+                            array('column'=>'time_update', 'name'=>'Last Modified', 'width'=>'50'),
     );
 
     /**
@@ -149,7 +155,7 @@ class AdinfoController extends ActionController
     }
 
     /**
-     * Add a channel
+     * Add an ad
      */
     public function addAction()
     {
@@ -160,28 +166,28 @@ class AdinfoController extends ActionController
             $form->setInputFilter(new AdinfoFilter);
             $form->setData($data);
             if ($form->isValid()) {
-                $values = $form->getData();
-                foreach (array_keys($values) as $key) {
-                    if (!in_array($key, $this->channelColumns)) {
-                        unset($values[$key]);
-                    }
-                }
-                $values['time_create'] = $values['time_update'] = time();
-                unset($values['id']);
-                $row = $this->getModel('channel')->createRow($values);
-                $row->save();
-                if ($row->id) {
-                    $message = __('Adinfo data saved successfully.');
-                    //$this->view()->setTemplate(false);
-                    $this->redirect()->toRoute('', array('action' => 'index'));
-                    return;
-                } else {
-                    $message = __('Adinfo data not saved.');
-                }
+                 $values = $form->getData();
+                 foreach (array_keys($values) as $key) {
+                    if (!in_array($key, $this->AdinfoColumns)) {
+                         unset($values[$key]);
+                     }
+                 }
+                 $values['time_create'] = $values['time_update'] = time();
+                 unset($values['id']);
+                 $row = $this->getModel('Adinfo')->createRow($values);
+                 $row->save();
+                 if ($row->id) {
+                     $message = __('Adinfo data saved successfully.');
+                     //$this->view()->setTemplate(false);
+                     $this->redirect()->toRoute('', array('action' => 'index'));
+                     return;
+                 } else {
+                     $message = __('Adinfo data not saved.');
+                 }
             } else {
-                $message = __('Invalid data, please check and re-submit.');
+                 $message = __('Invalid data, please check and re-submit.');
             }
-        } else {
+         } else {
             $form = new AdinfoForm('channel');
             $form->setAttribute('action', $this->url('', array('action' => 'add')));
             $form->setData(array(
@@ -189,13 +195,18 @@ class AdinfoController extends ActionController
                 'section'   => 'front',
             ));
             $message = '';
-        }
+         }
 
-
-        $this->view()->assign('form', $form);
-        $this->view()->assign('title', __('Add a channel'));
+        $assign=array('form'       => $form,
+                      'data'       => $data,
+                      'values'     => $values, 
+                      'row'        => $row,
+                      );
+        $this->view()->assign($assign);
+        //$this->view()->assign('form', $form);
+        $this->view()->assign('title', __('Add a Adinfo'));
         $this->view()->assign('message', $message);
-        $this->view()->setTemplate('channel-edit');
+        $this->view()->setTemplate('adinfo-edit');
     }
 
     /**

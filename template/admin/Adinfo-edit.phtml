@@ -1,0 +1,27 @@
+<!-- 下面这句输出大标题 -->
+<h2 class="page-header" xmlns="http://www.w3.org/1999/html"><?php echo $this->escape($title); ?></h2>
+
+<div class="row">
+    <!-- form body -->
+    <div class="span11">
+        <!-- 下面这句决定以怎样的方式显示增加页面，即需要显示哪些表单 -->
+        <!-- 这些表单在form中设置 -->
+        <?php include $this->templateComponent('form'); ?>
+    </div>
+    <!--ext info-->
+
+    <div class="span3">
+        <?php if (!empty($extdata['time_create'])) :?>
+        <div>
+             <label><?php _e('Added Date');?></label>
+            <span><?php echo $extdata['time_create'];?></span> 
+         </div>
+        <?php endif;?>
+        <?php if (!empty($extdata['time_update'])) :?>
+        <div>
+             <label><?php _e('Last Modified');?></label>
+            <span><?php echo $extdata['time_update'];?></span> 
+        </div>
+        <?php endif;?>
+    </div> 
+</div> 
