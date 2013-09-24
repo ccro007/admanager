@@ -7,7 +7,9 @@
 
 <div class="clearfix form-inline">
     <a class="btn" href="<?php echo $this->url('',array('action' => 'add')); ?>"><?php _e('Add'); ?></a>
-    <a class="btn btn-delete" href="javascript:void(0);" onclick="channelList.submit();"><?php _e('Delete'); ?></a>
+    <a class="btn btn-delete" href="javascript:void(0);" onclick="AdinfoList.submit();"><?php _e('Delete'); ?></a>
+  
+
     <form class="pull-right form-search" method="get" action="<?php echo $this->url('',array('action' => 'index','orderby'=>$orderby,'order'=>$order)); ?>">
         <input type="text" value="<?php echo $schName;?>" placeholder="<?php _e('Channel Name'); ?>" class="input-medium search-query" name="schName">
         <!--input type="text" value="<?php echo $schUrl;?>" placeholder="<?php _e('Channel Url'); ?>" class="input-medium search-query" name="schUrl"-->
@@ -46,8 +48,8 @@
 
 
         <td>
-            <span><a  href="<?php echo $this->url('', array('action' => 'edit', 'id' => $channel['id'])); ?>" title="<?php _e('Edit'); ?>"><?php _e('Edit'); ?></a></span>
-            <span><a  href="<?php echo $this->url('', array('action' => 'delete', 'id' => $channel['id'])); ?>" title="<?php _e('Delete'); ?>"><?php _e('Delete'); ?></a></span>
+            <span><a  href="<?php echo $this->url('', array('action' => 'edit', 'id' => $Adinfo['id'])); ?>" title="<?php _e('Edit'); ?>"><?php _e('Edit'); ?></a></span>
+            <span><a  href="<?php echo $this->url('', array('action' => 'delete', 'id' => $Adinfo['id'])); ?>" title="<?php _e('Delete'); ?>"><?php _e('Delete'); ?></a></span>
         </td>
     </tr>
     <?php endforeach;?>
@@ -55,11 +57,12 @@
 </table>
 </form>
 <?php echo $this->paginationControl($paginator, 'Sliding', 'paginator.phtml',array('class' => 'pagination-right')); ?>
+
 <script>
 (function($){
    var page={
        g:function(selector){
-           return jQuery("#channelList").find(selector);
+           return jQuery("#AdinfoList").find(selector);
        },
        init:function(){
            this.g(".check-all").click(this.checkAll);

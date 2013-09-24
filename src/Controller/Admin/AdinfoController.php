@@ -261,7 +261,7 @@ class AdinfoController extends ActionController
     }
 
     /**
-     * deleting a channel
+     * deleting a ad
      *
      */
     public function deleteAction()
@@ -269,7 +269,7 @@ class AdinfoController extends ActionController
         $id = Service::getParam($this, 'id', '');
         $id = is_array($id)?$id:(array)$id;
         if (count($id)) {
-            $this->getModel('channel')->delete(array('id'=>$id));
+            $this->getModel('Adinfo')->delete(array('id'=>$id));
         }
         $this->redirect()->toRoute('', array('action' => 'index'));
         //return 1;
