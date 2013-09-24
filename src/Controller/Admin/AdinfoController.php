@@ -217,21 +217,21 @@ class AdinfoController extends ActionController
         if ($this->request->isPost()) {
             $data = $this->request->getPost();
             $id = $data['id'];
-            $row = $this->getModel('channel')->find($id);
-            $form = new AdinfoForm('channel');
+            $row = $this->getModel('Adinfo')->find($id);
+            $form = new AdinfoForm('supplier');
             $form->setInputFilter(new AdinfoFilter);
             $form->setData($data);
             if ($form->isValid()) {
                 $values = $form->getData();
-                foreach (array_keys($values) as $key) {
-                    if (!in_array($key, $this->channelColumns)) {
-                        unset($values[$key]);
-                    }
-                }
+                 foreach (array_keys($values) as $key) {
+                     if (!in_array($key, $this->AdinfoColumns)) {
+                         unset($values[$key]);
+                     }
+                 }
                 $values['time_update'] = time();
                 $row->assign($values);
                 $row->save();
-                //$message = __('Adinfo data saved successfully.');
+                //$message = __('Supplier data saved successfully.');
                 $this->redirect()->toRoute('', array('action' => 'index'));
                 return;
             } else {
@@ -239,14 +239,14 @@ class AdinfoController extends ActionController
             }
         } else {
             $id = $this->params('id');
-            $row = $this->getModel('channel')->find($id);
+            $row = $this->getModel('Adinfo')->find($id);
             $data = $row->toArray();
             $dateFormat = Pi::config('date_format', 'intl');
             $extdata = array(
                         'time_create'=>date($dateFormat, $data['time_create']),
                         'time_update'=>date($dateFormat, $data['time_update'])
                         );
-            $form = new AdinfoForm('channel');
+            $form = new AdinfoForm('supplier');
             $form->setData($data);
             $form->setAttribute('action', $this->url('', array('action' => 'edit')));
             $message = '';
@@ -257,7 +257,7 @@ class AdinfoController extends ActionController
         $this->view()->assign('form', $form);
         $this->view()->assign('title', __('Adinfo edit'));
         $this->view()->assign('message', $message);
-        $this->view()->setTemplate('channel-edit');
+        $this->view()->setTemplate('Adinfo-edit');
     }
 
     /**
