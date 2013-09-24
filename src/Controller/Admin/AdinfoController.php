@@ -44,17 +44,14 @@ class AdinfoController extends ActionController
     );
 
     protected  $displayColumns = array(
-                            array('column'=>'id',         'name'=> 'id',         'width'=>'15'),
-                            array('column'=>'protal_id',  'name'=> 'protal_id',  'width'=>'45'),
-                            array('column'=>'channel_id', 'name'=> 'channel_id', 'width'=>'15'),
+                            array('column'=>'supplier_id','name'=>'supplier_id', 'width'=>'5'),
+                            array('column'=>'protal_id',  'name'=> 'protal_id',  'width'=>'5'),
+                            array('column'=>'channel_id', 'name'=> 'channel_id', 'width'=>'5'),
                             array('column'=>'adformat',   'name'=> 'adformat',   'width'=>'15'),
-                            array('column'=>'url',        'name'=>'url',         'width'=>'15'),
-                            array('column'=>'supplier_id','name'=>'supplier_id', 'width'=>'15'),
+                            array('column'=>'url',        'name'=>'url',         'width'=>'15'),                          
                             array('column'=>'content',    'name'=>'content',     'width'=>'15'),
-                            array('column'=>'ad_date',    'name'=>'ad_date',     'width'=>'15'),
                             array('column'=>'time_create','name'=>'time_create', 'width'=>'15'),
                             array('column'=>'time_update','name'=>'time_update', 'width'=>'15'),
-                            array('column'=>'user_update','name'=>'user_update', 'width'=>'15'),
     );
 
     /**
