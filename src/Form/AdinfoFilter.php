@@ -29,7 +29,7 @@ class AdinfoFilter extends InputFilter
     public function __construct()
     {
         $this->add(array(
-            'name'          => 'name',
+            'name'          => 'adformat',
             'required'      => true,
             'filters'       => array(
                 array(
@@ -45,12 +45,38 @@ class AdinfoFilter extends InputFilter
         ));
 
         $this->add(array(
-            'name'          => 'protal_id',
+            'name'          => 'url',
             'filters'       => array(
                 array(
-                    'name'  => 'Int',
+                    'name'  => 'StringTrim',
+                ),
+            ),
+            'validators'    => array(
+                array(
+                    'name'         => 'Regex',
+                    'options'      => array(
+                        'pattern'       => '/http:\/\/[\w.]+[\w\/]*[\w.]*\??[\w=&\+\%]*/is',
+                    ),
                 ),
             ),
         ));
+
+        $this->add(array(
+            'name'          => 'content',
+            'required'      => true,
+            'filters'       => array(
+                array(
+                    'name'  => 'StringTrim',
+                ),
+            ),
+            'validators'    => array(
+                new StringLength(array(
+                    'min'          => '3',
+                    'max'          => '50',
+                )),
+            ),
+        ));
+
     }
 }
+
